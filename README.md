@@ -8,9 +8,8 @@ Self-supervised learning (SSL) is an approach to extract universally reusable fe
 
 # Key results from this work
 
-1. Wild-pretraining of transformer networks improves robustness to CT imaging acquisitions.
-
+1. Wild-pretraining of transformer networks improves robustness to CT imaging acquisitions. In particular, Swin transformer created using wild-pretraining was significantly more accurate than its self-pretrained counterpart and also showed higher robustness to CT imaging differences. ![Box plot showing robustness to acquisition differences]()
 2. 
-3. 
+4. 
 
 
