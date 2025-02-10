@@ -13,9 +13,8 @@ Self-supervised learning (SSL) is an approach to extract universally reusable fe
 
 Please add details
 # Requirements
-
-# Installaion
 conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.7 -c pytorch -c nvidia
+# Installaion
 pip install nibabel==5.2.1 tensorboardX==2.5.1 ml_collections timm==0.6.12 monai==0.8.0
 
 
