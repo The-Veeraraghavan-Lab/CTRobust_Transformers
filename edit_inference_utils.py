@@ -1,13 +1,3 @@
-# Copyright (c) MONAI Consortium
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#     http://www.apache.org/licenses/LICENSE-2.0
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
 from typing import Any, Callable, List, Sequence, Tuple, Union
 
@@ -39,52 +29,7 @@ def sliding_window_inference(
     *args: Any,
     **kwargs: Any,
 ) -> torch.Tensor:
-    """
-    Sliding window inference on `inputs` with `predictor`.
-
-    When roi_size is larger than the inputs' spatial size, the input image are padded during inference.
-    To maintain the same spatial sizes, the output image will be cropped to the original input size.
-
-    Args:
-        inputs: input image to be processed (assuming NCHW[D])
-        roi_size: the spatial window size for inferences.
-            When its components have None or non-positives, the corresponding inputs dimension will be used.
-            if the components of the `roi_size` are non-positive values, the transform will use the
-            corresponding components of img size. For example, `roi_size=(32, -1)` will be adapted
-            to `(32, 64)` if the second spatial dimension size of img is `64`.
-        sw_batch_size: the batch size to run window slices.
-        predictor: given input tensor `patch_data` in shape NCHW[D], `predictor(patch_data)`
-            should return a prediction with the same spatial shape and batch_size, i.e. NMHW[D];
-            where HW[D] represents the patch spatial size, M is the number of output channels, N is `sw_batch_size`.
-        overlap: Amount of overlap between scans.
-        mode: {``"constant"``, ``"gaussian"``}
-            How to blend output of overlapping windows. Defaults to ``"constant"``.
-
-            - ``"constant``": gives equal weight to all predictions.
-            - ``"gaussian``": gives less weight to predictions on edges of windows.
-
-        sigma_scale: the standard deviation coefficient of the Gaussian window when `mode` is ``"gaussian"``.
-            Default: 0.125. Actual window sigma is ``sigma_scale`` * ``dim_size``.
-            When sigma_scale is a sequence of floats, the values denote sigma_scale at the corresponding
-            spatial dimensions.
-        padding_mode: {``"constant"``, ``"reflect"``, ``"replicate"``, ``"circular"``}
-            Padding mode for ``inputs``, when ``roi_size`` is larger than inputs. Defaults to ``"constant"``
-            See also: https://pytorch.org/docs/stable/nn.functional.html#pad
-        cval: fill value for 'constant' padding mode. Default: 0
-        sw_device: device for the window data.
-            By default the device (and accordingly the memory) of the `inputs` is used.
-            Normally `sw_device` should be consistent with the device where `predictor` is defined.
-        device: device for the stitched output prediction.
-            By default the device (and accordingly the memory) of the `inputs` is used. If for example
-            set to device=torch.device('cpu') the gpu memory consumption is less and independent of the
-            `inputs` and `roi_size`. Output is on the `device`.
-        args: optional args to be passed to ``predictor``.
-        kwargs: optional keyword args to be passed to ``predictor``.
-
-    Note:
-        - input must be channel-first and have a batch dim, supports N-D sliding window.
-
-    """
+   
     num_spatial_dims = len(inputs.shape) - 2
     if overlap < 0 or overlap >= 1:
         raise AssertionError("overlap must be >= 0 and < 1.")
